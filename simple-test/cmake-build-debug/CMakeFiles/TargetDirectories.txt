@@ -1,0 +1,3 @@
+/Users/sunwenli/Desktop/simple-database/utils-tools/simple-test/cmake-build-debug/CMakeFiles/simple_test.dir
+/Users/sunwenli/Desktop/simple-database/utils-tools/simple-test/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/sunwenli/Desktop/simple-database/utils-tools/simple-test/cmake-build-debug/CMakeFiles/rebuild_cache.dir

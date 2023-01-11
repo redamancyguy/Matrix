@@ -1,0 +1,7 @@
+"/Users/sunwenli/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_BUILD_TYPE=Release "-DCMAKE_MAKE_PROGRAM=/Users/sunwenli/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/CLion.app/Contents/bin/ninja/mac/ninja" -G Ninja -S /Users/sunwenli/Desktop/simple-database/utils-tools/simple-test -B /Users/sunwenli/Desktop/simple-database/utils-tools/simple-test/cmake-build-release
+-- Could NOT find OpenMP_C (missing: OpenMP_C_FLAGS OpenMP_C_LIB_NAMES) 
+-- Could NOT find OpenMP_CXX (missing: OpenMP_CXX_FLAGS OpenMP_CXX_LIB_NAMES) 
+-- Could NOT find OpenMP (missing: OpenMP_C_FOUND OpenMP_CXX_FOUND) 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/sunwenli/Desktop/simple-database/utils-tools/simple-test/cmake-build-release

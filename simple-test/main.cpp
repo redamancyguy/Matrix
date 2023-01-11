@@ -1,31 +1,14 @@
-//#include <iostream>
-//#include <vector>
-//#include <algorithm>
-//#include "include/TimerClock.hpp"
-//#include "include/ThreadPool.hpp"
-//#include <NumCpp.hpp>
-//#include <MemoryPool.hpp>
-//
-#include <boost/numeric/ublas/matrix.hpp>
-#include <boost/numeric/ublas/io.hpp>
-#include <boost/numeric/ublas/matrix_proxy.hpp>
-#include <boost/numeric/ublas/vector_proxy.hpp>
-#include <Eigen/Core>
-#include <Eigen/Dense>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <TimerClock.hpp>
+#include <ThreadPool.hpp>
+#include <MemoryPool.hpp>
+#include <Matrix.hpp>
+#include <LineaerRegression.hpp>
 
-//using namespace std;
-//using namespace Eigen;
-//namespace Eigen{
-//    Eigen::Matrix2d cross(Eigen::Matrix2d a,Eigen::Matrix2d b){
-//        Eigen::Matrix2d result(a);
-//        auto aa = b.begin();
-//        return result;
-//    }
-//}
-#include "Matrix.hpp"
-#include "LineaerRegression.hpp"
 
-int main() {
+void ML_TEST(){
     MachineLearning::LinearRegression<double> lng(true);
 //    MachineLearning::LinearRegression<double> lng(false);
     MachineLearning::Matrix<double> x(10, 1, MachineLearning::Matrix<double>::InitType::linear_space, 0, 99);
@@ -41,9 +24,47 @@ int main() {
     aa(1, 0) = 2;
 
     std::cout << lng.predict(poly_x).h_stack(y) << std::endl;
+}
 
-//    std::cout<<x.broadcast(aa)<<std::endl;
-//    std::cout<<y<<std::endl;
+template<class T>
+class Vector {
+public:
+    T *array;
+    std::size_t size;
+
+    Vector() {
+        size = 0;
+        array = (T*)std::malloc(sizeof(T) * 64);
+    }
+
+    ~Vector() {
+        std::free(array);
+    }
+
+    void Insert(std::size_t position, const T &element) {
+        for (size_t i = size; i > position; i--) {
+            array[i] = array[i-1];
+        }
+        array[position] = element;
+        size++;
+    }
+
+    friend std::ostream &operator<<(std::ostream &out, const Vector<T> &matrix) {
+        out << "[" ;
+//        for(size_t i = 0;i<size;i++){
+//
+//        }
+        out << "]" <<std::endl;
+        return out;
+    }
+};
+
+int main() {
+    Vector<double> dv;
+
+    for(int i = 0;i<60;i++){
+        dv.Insert(0,std::rand());
+    }
 
 
 }

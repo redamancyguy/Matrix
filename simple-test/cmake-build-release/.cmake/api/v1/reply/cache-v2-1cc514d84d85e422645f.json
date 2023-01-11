@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/Users/sunwenli/Desktop/simple-database/utils-tools/simple-test/cmake-build-release"
+			"value" : "/Users/sunwenli/Desktop/Matrix/simple-test/cmake-build-release"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -479,7 +479,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/sunwenli/Desktop/simple-database/utils-tools/simple-test/cmake-build-release/CMakeFiles/pkgRedirects"
+			"value" : "/Users/sunwenli/Desktop/Matrix/simple-test/cmake-build-release/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -539,7 +539,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/Users/sunwenli/Desktop/simple-database/utils-tools/simple-test"
+			"value" : "/Users/sunwenli/Desktop/Matrix/simple-test"
 		},
 		{
 			"name" : "CMAKE_INSTALL_NAME_TOOL",
@@ -1215,7 +1215,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/sunwenli/Desktop/simple-database/utils-tools/simple-test/cmake-build-release"
+			"value" : "/Users/sunwenli/Desktop/Matrix/simple-test/cmake-build-release"
 		},
 		{
 			"name" : "simple_test_IS_TOP_LEVEL",
@@ -1239,7 +1239,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/sunwenli/Desktop/simple-database/utils-tools/simple-test"
+			"value" : "/Users/sunwenli/Desktop/Matrix/simple-test"
 		}
 	],
 	"kind" : "cache",

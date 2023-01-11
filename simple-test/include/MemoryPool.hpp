@@ -25,7 +25,7 @@
 
 #include <climits>
 #include <cstddef>
-
+#include <map>
 template<std::size_t block_size = 4096>
 class MemoryPool {
 private:
@@ -38,12 +38,10 @@ private:
     std::map<Block *,std::size_t> real_blocks;
 public:
     void add_blocks() {
-//        std::cout << "add " << last_time_allocated << "blocks " << std::endl;
         char *pointer = (char *) std::malloc(block_size * last_time_allocated);
         real_blocks[(Block *) pointer] = last_time_allocated;
         auto end = pointer + (block_size * (last_time_allocated - 1));
         for (auto i = (char *) pointer; i < end; i += block_size) {
-//            printf(" i pointer  add blocks %p\n",i);
             ((Block *) i)->next = (Block *) (i + block_size);
         }
         tail->next = (Block*)pointer;
@@ -51,7 +49,6 @@ public:
     }
 
     void *allocate() {
-//        std::cout << " allocate " << std::endl;
         void *pointer;
         if (head == tail) {
             if (last_time_allocated < (INT32_MAX >> 1)) {
@@ -65,7 +62,6 @@ public:
     }
 
     void deallocate(void *pointer) {
-//        std::cout << " deallocate " << std::endl;
         ((Block *) pointer)->next = head;
         head = (Block *) pointer;
     }
@@ -77,7 +73,6 @@ public:
         real_blocks[head] = last_time_allocated;
         auto end = (Block *) (((char *) head) + (block_size * (last_time_allocated - 1)));
         for (auto i = head; i < end;) {
-//            printf(" i pointer %p\n",i);
             i->next = (Block *) (((char *) i) + block_size);
             i = (Block *) (((char *) i) + block_size);
         }
@@ -86,11 +81,9 @@ public:
 
     ~MemoryPool() {
         for (auto &_: real_blocks) {
-//            std::cout<<"free"<<std::endl;
             std::free(_.first);
         }
     }
-
 private:
 
 };

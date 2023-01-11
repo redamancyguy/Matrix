@@ -1,4 +1,4 @@
-# Install script for directory: /Users/sunwenli/Desktop/simple-database/utils-tools/simple-test
+# Install script for directory: /Users/sunwenli/Desktop/Matrix/simple-test
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/sunwenli/Desktop/simple-database/utils-tools/simple-test/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/sunwenli/Desktop/Matrix/simple-test/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

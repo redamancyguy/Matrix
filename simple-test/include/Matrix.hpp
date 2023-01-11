@@ -118,7 +118,6 @@ namespace MachineLearning {
         }
 
         Matrix(const Matrix<T> &matrix) {
-//            std::cout<<"copy "<<std::endl;
             rows = matrix.rows;
             cols = matrix.cols;
             if (array) {
@@ -132,7 +131,6 @@ namespace MachineLearning {
         }
 
         Matrix(Matrix<T> &&matrix) noexcept {
-//            std::cout<<"move "<<std::endl;
             this->rows = matrix.rows;
             this->cols = matrix.cols;
             if (array) {

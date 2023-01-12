@@ -1,0 +1,271 @@
+
+//int test() {
+//    std::allocator<char> allocator = std::allocator<char>();
+//    void *p = allocator.allocate(500000000);
+//    std::vector<char> tst_vec(2);
+//    tst_vec.insert(tst_vec.begin(), '*');
+//    std::cout << tst_vec[0] << std::endl;
+//    std::cout << std::is_pointer_v<int> << std::endl;
+//    std::cout << p << std::endl;
+//    std::cout << (int) std::numeric_limits<char>::max() << std::endl;
+//    std::cout << (int) 1ull << std::endl;
+//    std::invoke_result_t<decltype(test)> aaa = 1;
+////    using Y = typename std::invoke_result_t<int, size_t>::second_type;
+//    return 0;
+//}
+
+
+#include <unistd.h>
+
+int test_func1(int ar, int ar1) {
+    for (int i = 0; i < ar; i++) {
+        std::cout << std::this_thread::get_id() << std::endl;
+        sleep(1);
+    }
+    return 1;
+}
+
+template<class InputIterator>
+void print_it(InputIterator start, InputIterator end) {
+    std::cout << std::endl;
+    for (auto i = start; i <= end; i++) {
+        std::cout << *i << " ";
+    }
+}
+
+int main0() {
+    ThreadPool executor{50};
+    executor.enqueue(test_func1, 10000, 1);
+    executor.enqueue(test_func1, 10000, 1);
+    executor.enqueue(test_func1, 10000, 1);
+    executor.enqueue(test_func1, 10000, 1);
+    executor.enqueue(test_func1, 10000, 1);
+    executor.enqueue(test_func1, 10000, 1);
+    return 0;
+}
+
+int main1() {
+    long length = 1e7;
+    std::vector<int> target1(length * 80);
+    std::vector<int> target2(length * 8);
+    std::vector<int> target3(length * 8);
+    std::vector<int> target4(length * 8);
+    std::vector<int> target5(length * 8);
+    std::vector<int> target6(length * 8);
+    std::vector<std::vector<int>> datas;
+
+    std::vector<std::pair<std::vector<int>::iterator, std::vector<int>::iterator>> all_iters;
+
+
+    for (int i = 0; i < 8; i++) {
+        std::vector<int> data(length);
+        std::generate(data.begin(), data.end(), std::rand);
+        std::sort(data.begin(), data.end());
+
+        all_iters.emplace_back(data.begin(), data.end());
+//        all_iters.emplace_back(std::move(std::pair(data.begin(), data.end())));
+        std::cout << data.begin() - data.end() << std::endl;
+        datas.emplace_back(data);
+    }
+
+    ThreadPool executor{4};
+
+    TimerClock TC;
+
+
+    std::function cmp = std::less<int>();
+
+    TC.synchronization();
+    int sw = 0;
+    if (sw == 0) {
+        std::future<std::vector<int>::iterator> features1 = executor.enqueue(
+                std::merge<std::vector<int>::iterator,
+                        std::vector<int>::iterator,
+                        std::vector<int>::iterator, decltype(cmp)>,
+                datas[0].begin(), datas[0].end(),
+                datas[1].begin(), datas[1].end(), target1.begin(), cmp);
+
+        std::future<std::vector<int>::iterator> features2 = executor.enqueue(
+                std::merge<std::vector<int>::iterator,
+                        std::vector<int>::iterator,
+                        std::vector<int>::iterator, decltype(cmp)>,
+                datas[2].begin(), datas[2].end(),
+                datas[3].begin(), datas[3].end(), target2.begin(),
+                cmp);
+
+        std::future<std::vector<int>::iterator> features3 = executor.enqueue(
+                std::merge<std::vector<int>::iterator,
+                        std::vector<int>::iterator,
+                        std::vector<int>::iterator, decltype(cmp)>,
+                datas[4].begin(), datas[4].end(),
+                datas[5].begin(), datas[5].end(), target3.begin(),
+                cmp);
+        std::future<std::vector<int>::iterator> features4 = executor.enqueue(
+                std::merge<std::vector<int>::iterator,
+                        std::vector<int>::iterator,
+                        std::vector<int>::iterator, decltype(cmp)>,
+                datas[6].begin(), datas[6].end(),
+                datas[7].begin(), datas[7].end(), target4.begin(),
+                cmp);
+
+
+        features1.wait();
+        features2.wait();
+        features3.wait();
+        features4.wait();
+
+        features1 = executor.enqueue(
+                std::merge<std::vector<int>::iterator,
+                        std::vector<int>::iterator,
+                        std::vector<int>::iterator, decltype(cmp)>,
+                target1.begin(), target1.begin() + length * 2,
+                target2.begin(), target2.begin() + length * 2, target5.begin(),
+                cmp);
+
+        features2 = executor.enqueue(
+                std::merge<std::vector<int>::iterator,
+                        std::vector<int>::iterator,
+                        std::vector<int>::iterator, decltype(cmp)>,
+                target3.begin(), target3.begin() + length * 2,
+                target4.begin(), target4.begin() + length * 2, target6.begin(),
+                cmp);
+        features1.wait();
+        features2.wait();
+        features2 = executor.enqueue(
+                std::merge<std::vector<int>::iterator,
+                        std::vector<int>::iterator,
+                        std::vector<int>::iterator, decltype(cmp)>,
+                target5.begin(), target5.begin() + length * 4,
+                target6.begin(), target6.begin() + length * 4, target1.begin(),
+                cmp);
+
+        features2.wait();
+    } else if (sw == 1) {
+        std::merge(datas[0].begin(), datas[0].end(),
+                   datas[1].begin(), datas[1].end(), target1.begin(),
+                   cmp);
+
+        std::merge(datas[2].begin(), datas[2].end(),
+                   datas[3].begin(), datas[3].end(), target2.begin(),
+                   cmp);
+
+        std::merge(datas[4].begin(), datas[4].end(),
+                   datas[5].begin(), datas[5].end(), target3.begin(),
+                   cmp);
+
+        std::merge(datas[6].begin(), datas[6].end(),
+                   datas[7].begin(), datas[7].end(), target4.begin(),
+                   cmp);
+
+        std::merge(target1.begin(), target1.begin() + length * 2,
+                   target2.begin(), target2.begin() + length * 2, target5.begin(),
+                   cmp);
+
+        std::merge(target3.begin(), target3.begin() + length * 2,
+                   target4.begin(), target4.begin() + length * 2, target6.begin(),
+                   cmp);
+
+
+        std::merge(target5.begin(), target5.begin() + length * 4,
+                   target6.begin(), target6.begin() + length * 4, target1.begin(),
+                   cmp);
+    } else if (sw == 2) {
+        auto rss1 = std::async(std::launch::async, [&]() {
+            std::merge(datas[0].begin(), datas[0].end(),
+                       datas[1].begin(), datas[1].end(), target1.begin(),
+                       cmp);
+        });
+        auto rss2 = std::async(std::launch::async, [&]() {
+            std::merge(datas[2].begin(), datas[2].end(),
+                       datas[3].begin(), datas[3].end(), target2.begin(),
+                       cmp);
+        });
+        auto rss3 = std::async(std::launch::async, [&]() {
+            std::merge(datas[4].begin(), datas[4].end(),
+                       datas[5].begin(), datas[5].end(), target3.begin(),
+                       cmp);
+        });
+        auto rss4 = std::async(std::launch::async, [&]() {
+            std::merge(datas[6].begin(), datas[6].end(),
+                       datas[7].begin(), datas[7].end(), target4.begin(),
+                       cmp);
+        });
+        rss1.wait();
+        rss2.wait();
+        rss3.wait();
+        rss4.wait();
+        rss1 = std::async(std::launch::async, [&]() {
+            std::merge(target1.begin(), target1.begin() + length * 2,
+                       target2.begin(), target2.begin() + length * 2, target5.begin(),
+                       cmp);
+        });
+        rss2 = std::async(std::launch::async, [&]() {
+            std::merge(target3.begin(), target3.begin() + length * 2,
+                       target4.begin(), target4.begin() + length * 2, target6.begin(),
+                       cmp);
+        });
+        rss1.wait();
+        rss2.wait();
+        rss1 = std::async(std::launch::async, [&]() {
+            std::merge(target5.begin(), target5.begin() + length * 4,
+                       target6.begin(), target6.begin() + length * 4, target1.begin(),
+                       cmp);
+        });
+        rss1.wait();
+    }
+
+    std::cout << TC.get_timer_microSec() << std::endl;
+
+
+    return 0;
+}
+
+//0  5194961 5189357
+//1  8837992 8847516
+//2  5196689 5305873
+class A {
+public:
+    int a;
+
+    int to_show(int input) {
+        std::cout << a << std::endl;
+        return -1;
+    }
+};
+
+class print {
+public:
+    int printHello(std::string name) {
+        std::cout << "Hello " << name << "!!!\n";
+        return 1;
+    }
+
+    void printHello_(ThreadPool &pool) {
+        auto a = pool.enqueue(std::bind(&print::printHello, this, std::placeholders::_1), "dabin");
+    }
+};
+
+
+int main4() {
+
+
+    print pt;
+    //  传入顺序 线程函数，实例化类指针，函数参数
+//    std::thread t1(&print::printHello,&pt,"dabin");
+//    t1.join();
+    //=============
+    ThreadPool executor{50};
+    A a{1};
+//    a.to_show(2);
+//    .enqueue(std::bind(&Dog::sayHello, &dog));
+//auto func = std::bind(&A::to_show,&a);
+
+//
+    executor.enqueue(std::bind(&print::printHello, &pt, std::placeholders::_1), "dabin");
+//    executor.enqueue(std::mem_fn(&A::to_show), &a);
+    //=============
+    pt.printHello_(executor);
+
+//    executor.destroy();
+    return 0;
+}

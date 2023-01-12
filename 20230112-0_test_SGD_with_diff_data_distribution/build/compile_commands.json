@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/Users/sunwenli/Desktop/simple-database/utils-tools/simple-test/build",
+  "command": "/usr/bin/clang++  -I/opt/homebrew/include -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++2b -o CMakeFiles/simple_test.dir/main.cpp.o -c /Users/sunwenli/Desktop/simple-database/utils-tools/simple-test/main.cpp",
+  "file": "/Users/sunwenli/Desktop/simple-database/utils-tools/simple-test/main.cpp"
+}
+]

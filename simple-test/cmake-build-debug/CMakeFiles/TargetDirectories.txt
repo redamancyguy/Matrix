@@ -1,3 +1,0 @@
-/Users/sunwenli/Desktop/Matrix/simple-test/cmake-build-debug/CMakeFiles/simple_test.dir
-/Users/sunwenli/Desktop/Matrix/simple-test/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/sunwenli/Desktop/Matrix/simple-test/cmake-build-debug/CMakeFiles/rebuild_cache.dir

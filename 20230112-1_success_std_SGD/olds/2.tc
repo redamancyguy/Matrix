@@ -1,0 +1,19 @@
+int main() {
+    ublas::matrix<double> M(3, 3, 1);
+    ublas::identity_matrix<double> I(3);
+    ublas::zero_matrix<double> Z(3);
+    ublas::scalar_matrix<double> S(2, 3);
+//    std::cout<<M<<std::endl;
+//    std::cout<<I<<std::endl;
+//    std::cout<<Z<<std::endl;
+//    std::cout<<S<<std::endl;
+//    std::cout << ublas::row(M, 0) << std::endl;
+    std::cout << ublas::row(M, 0) <<" "<< ublas::row(M, 1) << std::endl;
+    std::cout << ublas::row(M, 0)<<  "  "<< ublas::row(M, 1) << std::endl;
+
+    std::cout << ublas::inner_prod(ublas::row(M, 0), ublas::row(M, 1)) << std::endl;
+    std::cout << ublas::project(ublas::row(M, 1), ublas::range(0, 2)) << std::endl;
+    std::cout << M + M << std::endl;
+
+    int (*po)[10];
+}
